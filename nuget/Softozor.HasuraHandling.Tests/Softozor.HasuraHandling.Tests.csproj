@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+		<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<CodeAnalysisRuleSet>..\code-analysis\stylecop\rules\CodeAnalysisTestProjectDebug.ruleset</CodeAnalysisRuleSet>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DebugType>pdbonly</DebugType>
+		<CodeAnalysisRuleSet>..\code-analysis\stylecop\rules\CodeAnalysisTestProject.ruleset</CodeAnalysisRuleSet>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentAssertions" Version="5.10.3" />
+		<PackageReference Include="JunitXml.TestLogger" Version="2.1.81" />
+		<PackageReference Include="Moq" Version="4.16.0" />
+		<PackageReference Include="nunit" Version="3.13.1" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Softozor.HasuraHandling\Softozor.HasuraHandling.csproj" />
+	</ItemGroup>
+
+</Project>

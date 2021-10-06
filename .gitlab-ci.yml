@@ -1,0 +1,209 @@
+stages:
+- lint
+- fixtures
+- build
+- test
+- publish
+
+variables:
+  CONFIGURATION: Release
+  DOTNET_VERSION: "6.0"
+  GIT_SUBMODULE_STRATEGY: recursive
+  NUGET_PACKAGES_DIRECTORY: .nuget
+  SOURCE_NAME: gitlab-softozor-packages
+
+.publish-nuget: &publish-nuget
+- dotnet nuget add source "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/packages/nuget/index.json" --name ${SOURCE_NAME} --username $GITLAB_USER_LOGIN --password $PRIVATE_ACCESS_TOKEN --store-password-in-clear-text
+- python3 /usr/local/bin/set_assembly_version.py -f ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj -v $NEW_VERSION
+- dotnet pack --no-build -c ${CONFIGURATION} ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj
+- dotnet nuget push ${BASE_DIR}/${PACKAGE_NAME}/bin/${CONFIGURATION}/*.nupkg --source ${SOURCE_NAME}
+
+.publish-dotnet-patch: &publish-dotnet-patch
+  image: softozor/dotnet-publish:$TOOLS_SHA
+  stage: publish
+  variables:
+    BASE_DIR: ./nuget
+  before_script:
+  - export NEW_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type nuget --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
+  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY ${BASE_DIR}/packages.sln
+  script:
+  - *publish-nuget
+  only:
+    refs:
+    - master
+    changes:
+    - ${BASE_DIR}/${PACKAGE_NAME}/**/*
+  except:
+    variables:
+    - $SCHEDULED_BUILD == "true"
+
+.publish-dotnet-minor: &publish-dotnet-minor
+  <<: *publish-dotnet-patch
+  when: manual
+
+.publish-dotnet-major: &publish-dotnet-major
+  <<: *publish-dotnet-minor
+
+.publish-pypi: &publish-pypi
+- TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/* --verbose
+- TWINE_PASSWORD=${PYPI_API_TOKEN} TWINE_USERNAME=${PYPI_API_USERNAME} python -m twine upload dist/* --verbose
+
+.publish-pypi-patch: &publish-pypi-patch
+  image: softozor/python-publish:$TOOLS_SHA
+  stage: publish
+  variables:
+    BASE_DIR: ./pypi
+  before_script:
+  - export CLIENT_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type pypi --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
+  - cd ${BASE_DIR}/${PACKAGE_NAME}
+  - python3 setup.py sdist bdist_wheel
+  script:
+  - *publish-pypi
+  only:
+    refs:
+    - master
+    changes:
+    - ${BASE_DIR}/${PACKAGE_NAME}/**/*
+  except:
+    variables:
+    - $SCHEDULED_BUILD == "true"
+
+.publish-pypi-minor: &publish-pypi-minor
+  <<: *publish-pypi-patch
+  when: manual
+
+.publish-pypi-major: &publish-pypi-major
+  <<: *publish-pypi-minor
+
+lint:
+  stage: lint
+  image: softozor/python-lint:$TOOLS_SHA
+  script:
+  - autopep8 -rd . --exit-code
+
+publish-alpine-with-file:
+  stage: fixtures
+  image: docker:latest
+  variables:
+    DOCKER_IMAGE: softozor/alpine-with-file
+    DOCKERFILE_FOLDER: ./pypi/jelastic-client/test/docker/alpine-with-file
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+  - docker build $DOCKERFILE_FOLDER -t $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE:latest
+  - docker push $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
+  - docker push $DOCKER_IMAGE:latest
+  only:
+    changes:
+    - ${DOCKERFILE_FOLDER}/*
+
+build:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
+  before_script:
+  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+  script:
+  - dotnet publish -c ${CONFIGURATION} ./nuget/packages.sln
+  artifacts:
+    paths:
+    - ./nuget/*/bin/${CONFIGURATION}/net${DOTNET_VERSION}
+  only:
+    changes:
+    - nuget/**/*
+
+dotnet-tests:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
+  before_script:
+  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+  script:
+  - dotnet test --no-build -c ${CONFIGURATION} --logger:"junit;LogFilePath=.\test-reports\test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose" ./nuget/packages.sln
+  artifacts:
+    reports:
+      junit:
+      - nuget/*.Tests/test-reports/*.xml
+    paths:
+    - nuget/*.Tests/test-reports/*.xml
+  only:
+    changes:
+    - nuget/**/*
+
+jelastic-client-tests:
+  stage: test
+  image: softozor/python-tests:$TOOLS_SHA
+  variables:
+    PATH_TO_PACKAGE: ./pypi/jelastic-client
+    PYTHONPATH: ./pypi/jelastic-client
+  before_script:
+  - cd $PATH_TO_PACKAGE
+  - python setup.py install
+  - cd test
+  script:
+    - |
+      pytest -p no:cacheprovider -ra -vv --junitxml=./test-reports/test-report.xml \
+        -n 4 \
+        --api-url $JELASTIC_API_URL \
+        --api-token $JELASTIC_ACCESS_TOKEN \
+        --test-data-dir ./data \
+        --jelastic-version $JELASTIC_VERSION \
+        --commit-sha $CI_COMMIT_SHORT_SHA
+  artifacts:
+    reports:
+      junit:
+      - ${PATH_TO_PACKAGE}/test/test-reports/*.xml
+    paths:
+      - ${PATH_TO_PACKAGE}/test/test-reports
+
+publish-hasura-handling-patch:
+  <<: *publish-dotnet-patch
+  variables:
+    PACKAGE_NAME: Softozor.HasuraHandling
+    INCREASE_VERSION: patch
+
+publish-hasura-handling-minor:
+  <<: *publish-dotnet-minor
+  variables:
+    PACKAGE_NAME: Softozor.HasuraHandling
+    INCREASE_VERSION: minor
+
+publish-hasura-handling-major:
+  <<: *publish-dotnet-major
+  variables:
+    PACKAGE_NAME: Softozor.HasuraHandling
+    INCREASE_VERSION: major
+
+publish-faas-client-patch:
+  <<: *publish-pypi-patch
+  variables:
+    PACKAGE_NAME: faas-client
+    INCREASE_VERSION: patch
+
+publish-faas-client-minor:
+  <<: *publish-pypi-minor
+  variables:
+    PACKAGE_NAME: faas-client
+    INCREASE_VERSION: minor
+
+publish-faas-client-major:
+  <<: *publish-pypi-major
+  variables:
+    PACKAGE_NAME: faas-client
+    INCREASE_VERSION: major
+
+publish-jelastic-client-patch:
+  <<: *publish-pypi-patch
+  variables:
+    PACKAGE_NAME: jelastic-client
+    INCREASE_VERSION: patch
+
+publish-jelastic-client-minor:
+  <<: *publish-pypi-minor
+  variables:
+    PACKAGE_NAME: jelastic-client
+    INCREASE_VERSION: minor
+
+publish-jelastic-client-major:
+  <<: *publish-pypi-major
+  variables:
+    PACKAGE_NAME: jelastic-client
+    INCREASE_VERSION: major

@@ -1,0 +1,15 @@
+type: install
+name: valid manifest
+
+nodes:
+  count: 1
+  cloudlets: 4
+  nodeGroup: cp
+  image: alpine:latest
+skipNodeEmails: true
+
+success:
+  email: false
+  text: |
+    **Field1**: Value1  
+    **Field2**: Value2

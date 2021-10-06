@@ -1,0 +1,3 @@
+[submodule "code-analysis"]
+	path = nuget/code-analysis
+	url = ../code-analysis.git
