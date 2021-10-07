@@ -12,7 +12,7 @@ test_requires = [
     "pytest-xdist"
 ]
 
-client_version = os.environ.get("JELASTIC_CLIENT_VERSION", "0.0.0")
+client_version = os.environ.get("CLIENT_VERSION", "0.0.0")
 server_version = os.environ.get("JELASTIC_VERSION", "0.0.0")
 
 setuptools.setup(
