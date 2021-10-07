@@ -24,8 +24,6 @@ variables:
 .publish-dotnet-patch: &publish-dotnet-patch
   image: softozor/dotnet-publish:$TOOLS_SHA
   stage: publish
-  variables:
-    BASE_DIR: ./nuget
   before_script:
   - export NEW_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type nuget --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
   - *dotnet-restore
@@ -54,8 +52,6 @@ variables:
 .publish-pypi-patch: &publish-pypi-patch
   image: softozor/python-publish:$TOOLS_SHA
   stage: publish
-  variables:
-    BASE_DIR: ./pypi
   before_script:
   - export CLIENT_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type pypi --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
   - cd ${BASE_DIR}/${PACKAGE_NAME}
@@ -167,6 +163,7 @@ jelastic-client-tests:
 publish-hasura-handling-patch:
   <<: *publish-dotnet-patch
   variables:
+    BASE_DIR: ./nuget
     PACKAGE_NAME: Softozor.HasuraHandling
     INCREASE_VERSION: patch
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
@@ -174,6 +171,7 @@ publish-hasura-handling-patch:
 publish-hasura-handling-minor:
   <<: *publish-dotnet-minor
   variables:
+    BASE_DIR: ./nuget
     PACKAGE_NAME: Softozor.HasuraHandling
     INCREASE_VERSION: minor
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
@@ -181,6 +179,7 @@ publish-hasura-handling-minor:
 publish-hasura-handling-major:
   <<: *publish-dotnet-major
   variables:
+    BASE_DIR: ./nuget
     PACKAGE_NAME: Softozor.HasuraHandling
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
@@ -188,6 +187,7 @@ publish-hasura-handling-major:
 publish-faas-client-patch:
   <<: *publish-pypi-patch
   variables:
+    BASE_DIR: ./pypi
     PACKAGE_NAME: faas-client
     INCREASE_VERSION: patch
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FAAS_CLIENT
@@ -195,6 +195,7 @@ publish-faas-client-patch:
 publish-faas-client-minor:
   <<: *publish-pypi-minor
   variables:
+    BASE_DIR: ./pypi
     PACKAGE_NAME: faas-client
     INCREASE_VERSION: minor
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FAAS_CLIENT
@@ -202,6 +203,7 @@ publish-faas-client-minor:
 publish-faas-client-major:
   <<: *publish-pypi-major
   variables:
+    BASE_DIR: ./pypi
     PACKAGE_NAME: faas-client
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FAAS_CLIENT
@@ -209,6 +211,7 @@ publish-faas-client-major:
 publish-jelastic-client-patch:
   <<: *publish-pypi-patch
   variables:
+    BASE_DIR: ./pypi
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: patch
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
@@ -216,6 +219,7 @@ publish-jelastic-client-patch:
 publish-jelastic-client-minor:
   <<: *publish-pypi-minor
   variables:
+    BASE_DIR: ./pypi
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: minor
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
@@ -223,6 +227,7 @@ publish-jelastic-client-minor:
 publish-jelastic-client-major:
   <<: *publish-pypi-major
   variables:
+    BASE_DIR: ./pypi
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
