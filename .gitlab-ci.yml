@@ -12,6 +12,9 @@ variables:
   NUGET_PACKAGES_DIRECTORY: .nuget
   SOURCE_NAME: gitlab-softozor-packages
 
+.dotnet-restore: &dotnet-restore
+- dotnet restore --packages $NUGET_PACKAGES_DIRECTORY ${BASE_DIR}/packages.sln
+
 .publish-nuget: &publish-nuget
 - dotnet nuget add source "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/packages/nuget/index.json" --name ${SOURCE_NAME} --username $GITLAB_USER_LOGIN --password $PRIVATE_ACCESS_TOKEN --store-password-in-clear-text
 - python3 /usr/local/bin/set_assembly_version.py -f ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj -v $NEW_VERSION
@@ -25,7 +28,7 @@ variables:
     BASE_DIR: ./nuget
   before_script:
   - export NEW_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type nuget --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
-  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY ${BASE_DIR}/packages.sln
+  - *dotnet-restore
   script:
   - *publish-nuget
   only:
@@ -100,10 +103,12 @@ publish-alpine-with-file:
 build:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
+  variables:
+    BASE_DIR: ./nuget
   before_script:
-  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+  - *dotnet-restore
   script:
-  - dotnet publish -c ${CONFIGURATION} ./nuget/packages.sln
+  - dotnet publish -c ${CONFIGURATION} ${BASE_DIR}/packages.sln
   artifacts:
     paths:
     - ./nuget/*/bin/${CONFIGURATION}/net${DOTNET_VERSION}
@@ -114,8 +119,10 @@ build:
 dotnet-tests:
   stage: test
   image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
+  variables:
+    BASE_DIR: ./nuget
   before_script:
-  - dotnet restore --packages $NUGET_PACKAGES_DIRECTORY
+  - *dotnet-restore
   script:
   - dotnet test --no-build -c ${CONFIGURATION} --logger:"junit;LogFilePath=.\test-reports\test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose" ./nuget/packages.sln
   artifacts:
