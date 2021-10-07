@@ -15,6 +15,8 @@ test_requires = [
 client_version = os.environ.get("CLIENT_VERSION", "0.0.0")
 server_version = os.environ.get("JELASTIC_VERSION", "0.0.0")
 
+print('CLIENT_VERSION in setup: ', client_version)
+
 setuptools.setup(
     name="jelastic-client",
     version=client_version,

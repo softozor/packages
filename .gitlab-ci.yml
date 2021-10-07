@@ -54,6 +54,8 @@ variables:
   stage: publish
   before_script:
   - export CLIENT_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type pypi --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
+  - echo "MIN_PACKAGE_VERSION=$MIN_PACKAGE_VERSION"
+  - echo "CLIENT_VERSION=$CLIENT_VERSION"
   - cd ${BASE_DIR}/${PACKAGE_NAME}
   - python3 setup.py sdist bdist_wheel
   script:
