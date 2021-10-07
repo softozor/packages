@@ -111,10 +111,10 @@ build:
   - dotnet publish -c ${CONFIGURATION} ${BASE_DIR}/packages.sln
   artifacts:
     paths:
-    - ./nuget/*/bin/${CONFIGURATION}/net${DOTNET_VERSION}
+    - ${BASE_DIR}/*/bin/${CONFIGURATION}/net${DOTNET_VERSION}
   only:
     changes:
-    - nuget/**/*
+    - ${BASE_DIR}/**/*
 
 dotnet-tests:
   stage: test
@@ -128,12 +128,12 @@ dotnet-tests:
   artifacts:
     reports:
       junit:
-      - nuget/*.Tests/test-reports/*.xml
+      - ${BASE_DIR}/*.Tests/test-reports/*.xml
     paths:
-    - nuget/*.Tests/test-reports/*.xml
+    - ${BASE_DIR}/*.Tests/test-reports/*.xml
   only:
     changes:
-    - nuget/**/*
+    - ${BASE_DIR}/**/*
 
 jelastic-client-tests:
   stage: test
@@ -160,6 +160,9 @@ jelastic-client-tests:
       - ${PATH_TO_PACKAGE}/test/test-reports/*.xml
     paths:
       - ${PATH_TO_PACKAGE}/test/test-reports
+  only:
+    changes:
+    - ${PATH_TO_PACKAGE}/**/*
 
 publish-hasura-handling-patch:
   <<: *publish-dotnet-patch
