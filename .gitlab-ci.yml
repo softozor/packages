@@ -159,51 +159,60 @@ publish-hasura-handling-patch:
   variables:
     PACKAGE_NAME: Softozor.HasuraHandling
     INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
 
 publish-hasura-handling-minor:
   <<: *publish-dotnet-minor
   variables:
     PACKAGE_NAME: Softozor.HasuraHandling
     INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
 
 publish-hasura-handling-major:
   <<: *publish-dotnet-major
   variables:
     PACKAGE_NAME: Softozor.HasuraHandling
     INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
 
 publish-faas-client-patch:
   <<: *publish-pypi-patch
   variables:
     PACKAGE_NAME: faas-client
     INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FAAS_CLIENT
 
 publish-faas-client-minor:
   <<: *publish-pypi-minor
   variables:
     PACKAGE_NAME: faas-client
     INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FAAS_CLIENT
 
 publish-faas-client-major:
   <<: *publish-pypi-major
   variables:
     PACKAGE_NAME: faas-client
     INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FAAS_CLIENT
 
 publish-jelastic-client-patch:
   <<: *publish-pypi-patch
   variables:
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
 
 publish-jelastic-client-minor:
   <<: *publish-pypi-minor
   variables:
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
 
 publish-jelastic-client-major:
   <<: *publish-pypi-major
   variables:
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
