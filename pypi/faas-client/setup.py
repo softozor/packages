@@ -11,15 +11,15 @@ test_requires = [
     "pytest-xdist"
 ]
 
-client_version = os.environ.get("CLIENT_VERSION", "0.0.0")
+package_version = os.environ.get("PACKAGE_VERSION", "0.0.0")
 
 setuptools.setup(
     name="faas-client",
-    version=client_version,
+    version=package_version,
     author="Laurent Michel",
     author_email="softozor@gmail.com",
     description=f"A client library for faas-cli",
-    url="https://gitlab.hidora.com/softozor/faas-client",
+    url="https://gitlab.hidora.com/softozor/packages",
     packages=setuptools.find_packages(),
     install_requires=install_requires,
     extras_require={

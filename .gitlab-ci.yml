@@ -17,7 +17,7 @@ variables:
 
 .publish-nuget: &publish-nuget
 - dotnet nuget add source "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/packages/nuget/index.json" --name ${SOURCE_NAME} --username $GITLAB_USER_LOGIN --password $PRIVATE_ACCESS_TOKEN --store-password-in-clear-text
-- python3 /usr/local/bin/set_assembly_version.py -f ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj -v $NEW_VERSION
+- python3 /usr/local/bin/set_assembly_version.py -f ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj -v $PACKAGE_VERSION
 - dotnet pack --no-build -c ${CONFIGURATION} ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj
 - dotnet nuget push ${BASE_DIR}/${PACKAGE_NAME}/bin/${CONFIGURATION}/*.nupkg --source ${SOURCE_NAME}
 
@@ -25,7 +25,7 @@ variables:
   image: softozor/dotnet-publish:$TOOLS_SHA
   stage: publish
   before_script:
-  - export NEW_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type nuget --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
+  - export PACKAGE_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type nuget --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
   - *dotnet-restore
   script:
   - *publish-nuget
@@ -53,9 +53,7 @@ variables:
   image: softozor/python-publish:$TOOLS_SHA
   stage: publish
   before_script:
-  - export CLIENT_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type pypi --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
-  - echo "MIN_PACKAGE_VERSION=$MIN_PACKAGE_VERSION"
-  - echo "CLIENT_VERSION=$CLIENT_VERSION"
+  - export PACKAGE_VERSION=$(python3 /usr/local/bin/get_latest_package_version.py --package-name $PACKAGE_NAME --package-type pypi --increase-version ${INCREASE_VERSION} --min-version $MIN_PACKAGE_VERSION)
   - cd ${BASE_DIR}/${PACKAGE_NAME}
   - python3 setup.py sdist bdist_wheel
   script:

@@ -12,20 +12,18 @@ test_requires = [
     "pytest-xdist"
 ]
 
-client_version = os.environ.get("CLIENT_VERSION", "0.0.0")
+package_version = os.environ.get("PACKAGE_VERSION", "0.0.0")
 server_version = os.environ.get("JELASTIC_VERSION", "0.0.0")
-
-print('CLIENT_VERSION in setup: ', client_version)
 
 setuptools.setup(
     name="jelastic-client",
-    version=client_version,
+    version=package_version,
     author="Laurent Michel",
     author_email="softozor@gmail.com",
     description=f"A client library for Jelastic v{server_version}",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://gitlab.hidora.com/softozor/jelastic-client",
+    url="https://gitlab.hidora.com/softozor/packages",
     packages=setuptools.find_packages(),
     install_requires=install_requires,
     extras_require={
