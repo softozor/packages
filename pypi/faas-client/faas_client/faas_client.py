@@ -4,11 +4,10 @@ import sh as sh
 
 
 class FaasClient:
-    def __init__(self, gateway_url, gateway_port, root_functions_folder, faas_config_file, username, password):
+    def __init__(self, gateway_url, gateway_port, root_functions_folder, username, password):
         self.__cli = sh.Command('faas-cli')
         self.endpoint = f'{gateway_url}:{gateway_port}'
         self.__root_functions_folder = root_functions_folder
-        self.__faas_config_file = faas_config_file
         self.__username = username
         self.__password = password
 
