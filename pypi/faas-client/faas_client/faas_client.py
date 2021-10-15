@@ -53,11 +53,14 @@ class FaasClient:
 
 
 class FaasClientFactory:
-    def __init__(self, root_functions_folder, gateway_port, faas_config_file):
+    def __init__(self, root_functions_folder, gateway_port):
         self.__root_functions_folder = root_functions_folder
         self.__gateway_port = gateway_port
-        self.__faas_config_file = faas_config_file
 
     def create(self, gateway_url, username, password):
-        return FaasClient(gateway_url, self.__gateway_port, self.__root_functions_folder, self.__faas_config_file,
-                          username, password)
+        return FaasClient(
+            gateway_url,
+            self.__gateway_port,
+            self.__root_functions_folder,
+            username,
+            password)
