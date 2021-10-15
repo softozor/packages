@@ -1,3 +1,5 @@
+import os.path
+
 import sh as sh
 
 
@@ -17,13 +19,36 @@ class FaasClient:
                             '--password', self.__password)
         return result.exit_code
 
+    def build(self, path_to_faas_configuration, function_name):
+        configuration_filename = os.path.basename(path_to_faas_configuration)
+        print('path_to_faas_configuration: ', path_to_faas_configuration)
+        print('configuration_filename    : ', configuration_filename)
+        print('dirname                   : ',
+              os.path.dirname(path_to_faas_configuration))
+        result = self.__cli(
+            'build',
+            '-f', configuration_filename,
+            '--filter', function_name,
+            _cwd=os.path.dirname(path_to_faas_configuration))
+        return result.exit_code
+
+    def push(self, path_to_faas_configuration, function_name):
+        configuration_filename = os.path.basename(path_to_faas_configuration)
+        result = self.__cli(
+            'push',
+            '-f', configuration_filename,
+            '--filter', function_name,
+            _cwd=os.path.dirname(path_to_faas_configuration))
+        return result.exit_code
+
     def deploy(self, function_name, env={}):
         env_options = [f'-e {key}={value}' for (key, value) in env.items()]
-        result = self.__cli('deploy',
-                            '--image', f'softozor/{function_name}',
-                            '--name', function_name,
-                            '-g', self.endpoint,
-                            ' '.join(env_options))
+        result = self.__cli(
+            'deploy',
+            '--image', f'softozor/{function_name}',
+            '--name', function_name,
+            '-g', self.endpoint,
+            ' '.join(env_options))
         return result.exit_code
 
 
