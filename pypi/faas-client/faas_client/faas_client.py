@@ -20,10 +20,6 @@ class FaasClient:
 
     def build(self, path_to_faas_configuration, function_name):
         configuration_filename = os.path.basename(path_to_faas_configuration)
-        print('path_to_faas_configuration: ', path_to_faas_configuration)
-        print('configuration_filename    : ', configuration_filename)
-        print('dirname                   : ',
-              os.path.dirname(path_to_faas_configuration))
         result = self.__cli(
             'build',
             '-f', configuration_filename,
