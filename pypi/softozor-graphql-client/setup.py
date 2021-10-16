@@ -6,7 +6,7 @@ install_requires = [
     "six",
     "http",
     "json",
-    "request"
+    "requests"
 ]
 
 test_requires = [
