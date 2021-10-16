@@ -231,3 +231,75 @@ publish-jelastic-client-major:
     PACKAGE_NAME: jelastic-client
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
+
+publish-graphql-client-patch:
+  <<: *publish-pypi-patch
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: graphql-client
+    INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
+
+publish-graphql-client-minor:
+  <<: *publish-pypi-minor
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: graphql-client
+    INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
+
+publish-graphql-client-major:
+  <<: *publish-pypi-major
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: graphql-client
+    INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
+
+publish-hasura-client-patch:
+  <<: *publish-pypi-patch
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: hasura-client
+    INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_CLIENT
+
+publish-hasura-client-minor:
+  <<: *publish-pypi-minor
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: hasura-client
+    INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_CLIENT
+
+publish-hasura-client-major:
+  <<: *publish-pypi-major
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: hasura-client
+    INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_CLIENT
+
+publish-test-utils-patch:
+  <<: *publish-pypi-patch
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: softozor-test-utils
+    INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_TEST_UTILS
+
+publish-test-utils-minor:
+  <<: *publish-pypi-minor
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: softozor-test-utils
+    INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_TEST_UTILS
+
+publish-test-utils-major:
+  <<: *publish-pypi-major
+  variables:
+    BASE_DIR: ./pypi
+    PACKAGE_NAME: softozor-test-utils
+    INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_TEST_UTILS
