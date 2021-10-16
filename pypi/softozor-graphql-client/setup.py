@@ -5,7 +5,8 @@ import setuptools
 install_requires = [
     "six",
     "http",
-    "json"
+    "json",
+    "request"
 ]
 
 test_requires = [
@@ -13,9 +14,10 @@ test_requires = [
 ]
 
 package_version = os.environ.get("PACKAGE_VERSION", "0.0.0")
+package_name = os.environ.get("PACKAGE_NAME")
 
 setuptools.setup(
-    name="softozor-graphql-client",
+    name=package_name,
     version=package_version,
     author="Laurent Michel",
     author_email="softozor@gmail.com",
