@@ -236,7 +236,7 @@ publish-graphql-client-patch:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
-    PACKAGE_NAME: graphql-client
+    PACKAGE_NAME: softozor-graphql-client
     INCREASE_VERSION: patch
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
 
@@ -244,7 +244,7 @@ publish-graphql-client-minor:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
-    PACKAGE_NAME: graphql-client
+    PACKAGE_NAME: softozor-graphql-client
     INCREASE_VERSION: minor
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
 
@@ -252,7 +252,7 @@ publish-graphql-client-major:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
-    PACKAGE_NAME: graphql-client
+    PACKAGE_NAME: softozor-graphql-client
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
 
