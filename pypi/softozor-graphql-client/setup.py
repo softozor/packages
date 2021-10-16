@@ -5,7 +5,6 @@ import setuptools
 install_requires = [
     "six",
     "http",
-    "json",
     "requests"
 ]
 
