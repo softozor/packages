@@ -3,6 +3,10 @@ import os.path
 import sh as sh
 
 
+def build_env_options(env):
+    return [f'-e {key}={value}' for (key, value) in env.items()]
+
+
 class FaasClient:
     def __init__(self, gateway_url, gateway_port, root_functions_folder, username, password):
         self.__cli = sh.Command('faas-cli')
@@ -37,13 +41,25 @@ class FaasClient:
         return result.exit_code
 
     def deploy(self, function_name, env={}):
-        env_options = [f'-e {key}={value}' for (key, value) in env.items()]
+        env_options = build_env_options(env)
         result = self.__cli(
             'deploy',
             '--image', f'softozor/{function_name}',
             '--name', function_name,
             '-g', self.endpoint,
             ' '.join(env_options))
+        return result.exit_code
+
+    def up(self, path_to_faas_configuration, function_name, env={}):
+        env_options = build_env_options(env)
+        configuration_filename = os.path.basename(path_to_faas_configuration)
+        result = self.__cli(
+            'up',
+            '-f', configuration_filename,
+            '--filter', function_name,
+            '-g', self.endpoint,
+            ' '.join(env_options),
+            _cwd=os.path.dirname(path_to_faas_configuration))
         return result.exit_code
 
 
