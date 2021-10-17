@@ -3,8 +3,7 @@ import os
 import setuptools
 
 install_requires = [
-    "six",
-    "requests"
+    "six"
 ]
 
 test_requires = [
