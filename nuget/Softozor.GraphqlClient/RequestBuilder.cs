@@ -25,7 +25,7 @@ public class RequestBuilder : IRequestBuilder
         var query = this.FromFile(operationName);
         if (!query.Contains(operationName, StringComparison.InvariantCulture))
         {
-            throw new GraphqlClientException($"Operation {operationName} not found in graphql query.");
+            throw new GraphqlClientException($"Operation {operationName} not found in graphql query!");
         }
 
         return query;

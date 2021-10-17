@@ -110,7 +110,7 @@ build:
     - ${BASE_DIR}/*/bin/${CONFIGURATION}/net${DOTNET_VERSION}
   only:
     changes:
-    - ${BASE_DIR}/**/*
+    - nuget/**/*
 
 dotnet-tests:
   stage: test
@@ -124,12 +124,12 @@ dotnet-tests:
   artifacts:
     reports:
       junit:
-      - ${BASE_DIR}/*.Tests/test-reports/*.xml
+      - nuget/*.Tests/test-reports/*.xml
     paths:
-    - ${BASE_DIR}/*.Tests/test-reports/*.xml
+    - nuget/*.Tests/test-reports/*.xml
   only:
     changes:
-    - ${BASE_DIR}/**/*
+    - nuget/**/*
 
 jelastic-client-tests:
   stage: test
