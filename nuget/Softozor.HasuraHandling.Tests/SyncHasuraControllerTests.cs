@@ -1,4 +1,4 @@
-namespace Softozor.HasuraHandlingTests;
+namespace Softozor.HasuraHandling.Tests;
 
 using System;
 using FluentAssertions;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Softozor.HasuraHandling;
-using Softozor.HasuraHandlingTests.Fixtures;
+using Softozor.HasuraHandling.Tests.Fixtures;
 
 public class SyncHasuraControllerTests
 {

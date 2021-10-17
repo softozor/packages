@@ -1,4 +1,4 @@
-namespace Softozor.HasuraHandlingTests.Fixtures;
+namespace Softozor.HasuraHandling.Tests.Fixtures;
 
 using System;
 using Microsoft.AspNetCore.Mvc;

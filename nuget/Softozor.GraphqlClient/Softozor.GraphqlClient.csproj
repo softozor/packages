@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Authors>softozor</Authors>
+        <PackageId>Shopozor.GraphqlClient</PackageId>
+        <Product>Softozor GraphQL client</Product>
+        <PackageDescription>Specific graphql client library for the needs of the shopozor serverless functions.</PackageDescription>
+        <PackageProjectUrl>http://gitlab.hidora.com/softozor/packages</PackageProjectUrl>
+        <RepositoryUrl>http://gitlab.hidora.com/softozor/packages</RepositoryUrl>
+        <PackageTags>faas, graphql</PackageTags>
+        <Version>1.0.0</Version>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+        <DebugType>full</DebugType>
+        <CodeAnalysisRuleSet>..\code-analysis\stylecop\rules\CodeAnalysisNormalProjectDebug.ruleset</CodeAnalysisRuleSet>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+        <DebugType>pdbonly</DebugType>
+        <CodeAnalysisRuleSet>..\code-analysis\stylecop\rules\CodeAnalysisNormalProject.ruleset</CodeAnalysisRuleSet>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GraphQL.Client" Version="3.2.1" />
+        <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="3.2.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="Shopozor.HasuraHandling" Version="1.0.4" />
+    </ItemGroup>
+
+</Project>

@@ -184,6 +184,30 @@ publish-hasura-handling-major:
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
 
+publish-dotnet-graphql-client-patch:
+  <<: *publish-dotnet-patch
+  variables:
+    BASE_DIR: ./nuget
+    PACKAGE_NAME: Softozor.GraphqlClient
+    INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
+
+publish-dotnet-graphql-client-minor:
+  <<: *publish-dotnet-minor
+  variables:
+    BASE_DIR: ./nuget
+    PACKAGE_NAME: Softozor.GraphqlClient
+    INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
+
+publish-dotnet-graphql-client-major:
+  <<: *publish-dotnet-major
+  variables:
+    BASE_DIR: ./nuget
+    PACKAGE_NAME: Softozor.GraphqlClient
+    INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_HASURA_HANDLING
+
 publish-faas-client-patch:
   <<: *publish-pypi-patch
   variables:
@@ -232,7 +256,7 @@ publish-jelastic-client-major:
     INCREASE_VERSION: major
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_JELASTIC_CLIENT
 
-publish-graphql-client-patch:
+publish-python-graphql-client-patch:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
@@ -240,7 +264,7 @@ publish-graphql-client-patch:
     INCREASE_VERSION: patch
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
 
-publish-graphql-client-minor:
+publish-python-graphql-client-minor:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
@@ -248,7 +272,7 @@ publish-graphql-client-minor:
     INCREASE_VERSION: minor
     MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_GRAPHQL_CLIENT
 
-publish-graphql-client-major:
+publish-python-graphql-client-major:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
