@@ -14,6 +14,7 @@ class FaasClient:
         self.__root_functions_folder = root_functions_folder
         self.__username = username
         self.__password = password
+        self.__file_out = open('/tmp/output', 'a')
 
     def login(self):
         result = self.__cli('login',
@@ -59,7 +60,8 @@ class FaasClient:
             '--filter', function_name,
             '-g', self.endpoint,
             ' '.join(env_options),
-            _cwd=os.path.dirname(path_to_faas_configuration))
+            _cwd=os.path.dirname(path_to_faas_configuration),
+            _out=self.__file_out)
         return result.exit_code
 
 
