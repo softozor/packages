@@ -150,7 +150,7 @@ jelastic-client-tests:
     changes:
     - pypi/jelastic-client/**/*
 
-publish-hasura-handling-patch:
+patch hasura handling:
   <<: *publish-dotnet-patch
   variables:
     BASE_DIR: ./nuget
@@ -163,7 +163,7 @@ publish-hasura-handling-patch:
     changes:
       - nuget/Softozor.HasuraHandling/**/*
 
-publish-hasura-handling-minor:
+minor hasura handling:
   <<: *publish-dotnet-minor
   variables:
     BASE_DIR: ./nuget
@@ -176,7 +176,7 @@ publish-hasura-handling-minor:
     changes:
       - nuget/Softozor.HasuraHandling/**/*
 
-publish-hasura-handling-major:
+major hasura handling:
   <<: *publish-dotnet-major
   variables:
     BASE_DIR: ./nuget
@@ -189,7 +189,7 @@ publish-hasura-handling-major:
     changes:
       - nuget/Softozor.HasuraHandling/**/*
 
-publish-dotnet-graphql-client-patch:
+patch graphql client dotnet:
   <<: *publish-dotnet-patch
   variables:
     BASE_DIR: ./nuget
@@ -202,7 +202,7 @@ publish-dotnet-graphql-client-patch:
     changes:
       - nuget/Softozor.GraphqlClient/**/*
 
-publish-dotnet-graphql-client-minor:
+minor graphql client dotnet:
   <<: *publish-dotnet-minor
   variables:
     BASE_DIR: ./nuget
@@ -215,7 +215,7 @@ publish-dotnet-graphql-client-minor:
     changes:
       - nuget/Softozor.GraphqlClient/**/*
 
-publish-dotnet-graphql-client-major:
+major graphql client dotnet:
   <<: *publish-dotnet-major
   variables:
     BASE_DIR: ./nuget
@@ -228,7 +228,7 @@ publish-dotnet-graphql-client-major:
     changes:
       - nuget/Softozor.GraphqlClient/**/*
 
-publish-faas-client-patch:
+patch faas client:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
@@ -241,7 +241,7 @@ publish-faas-client-patch:
     changes:
       - pypi/faas-client/**/*
 
-publish-faas-client-minor:
+minor faas client:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
@@ -254,7 +254,7 @@ publish-faas-client-minor:
     changes:
       - pypi/faas-client/**/*
 
-publish-faas-client-major:
+major faas client:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
@@ -267,7 +267,7 @@ publish-faas-client-major:
     changes:
       - pypi/faas-client/**/*
 
-publish-jelastic-client-patch:
+patch jelastic client:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
@@ -280,7 +280,7 @@ publish-jelastic-client-patch:
     changes:
       - pypi/jelastic-client/**/*
 
-publish-jelastic-client-minor:
+minor jelastic client:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
@@ -293,7 +293,7 @@ publish-jelastic-client-minor:
     changes:
       - pypi/jelastic-client/**/*
 
-publish-jelastic-client-major:
+major jelastic client:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
@@ -306,7 +306,7 @@ publish-jelastic-client-major:
     changes:
       - pypi/jelastic-client/**/*
 
-publish-python-graphql-client-patch:
+patch graphql client python:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
@@ -319,7 +319,7 @@ publish-python-graphql-client-patch:
     changes:
       - pypi/softozor-graphql-client/**/*
 
-publish-python-graphql-client-minor:
+minor graphql client python:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
@@ -332,7 +332,7 @@ publish-python-graphql-client-minor:
     changes:
       - pypi/softozor-graphql-client/**/*
 
-publish-python-graphql-client-major:
+major graphql client python:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
@@ -345,7 +345,7 @@ publish-python-graphql-client-major:
     changes:
       - pypi/softozor-graphql-client/**/*
 
-publish-hasura-client-patch:
+patch hasura client:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
@@ -358,7 +358,7 @@ publish-hasura-client-patch:
     changes:
       - pypi/hasura-client/**/*
 
-publish-hasura-client-minor:
+minor hasura client:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
@@ -371,7 +371,7 @@ publish-hasura-client-minor:
     changes:
       - pypi/hasura-client/**/*
 
-publish-hasura-client-major:
+major hasura client:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
@@ -384,7 +384,7 @@ publish-hasura-client-major:
     changes:
       - pypi/hasura-client/**/*
 
-publish-test-utils-patch:
+patch test utils:
   <<: *publish-pypi-patch
   variables:
     BASE_DIR: ./pypi
@@ -397,7 +397,7 @@ publish-test-utils-patch:
     changes:
       - pypi/softozor-test-utils/**/*
 
-publish-test-utils-minor:
+minor test utils:
   <<: *publish-pypi-minor
   variables:
     BASE_DIR: ./pypi
@@ -410,7 +410,7 @@ publish-test-utils-minor:
     changes:
       - pypi/softozor-test-utils/**/*
 
-publish-test-utils-major:
+major test utils:
   <<: *publish-pypi-major
   variables:
     BASE_DIR: ./pypi
