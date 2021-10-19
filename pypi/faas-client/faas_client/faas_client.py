@@ -20,7 +20,8 @@ class FaasClient:
         result = self.__cli('login',
                             '-g', self.endpoint,
                             '--username', self.__username,
-                            '--password', self.__password)
+                            '--password', self.__password,
+                            _out=self.__file_out)
         return result.exit_code
 
     def build(self, path_to_faas_configuration, function_name):
