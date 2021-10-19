@@ -48,7 +48,8 @@ class FaasClient:
             '--image', f'softozor/{function_name}',
             '--name', function_name,
             '-g', self.endpoint,
-            ' '.join(env_options))
+            ' '.join(env_options),
+            _out=self.__file_out)
         return result.exit_code
 
     def up(self, path_to_faas_configuration, function_name, env={}):
