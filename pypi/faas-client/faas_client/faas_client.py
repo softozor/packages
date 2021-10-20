@@ -41,12 +41,12 @@ class FaasClient:
             _cwd=os.path.dirname(path_to_faas_configuration))
         return result.exit_code
 
-    def deploy(self, function_name, env={}):
+    def deploy(self, path_to_faas_configuration, function_name, env={}):
         env_options = build_env_options(env)
         result = self.__cli(
             'deploy',
-            '--image', f'softozor/{function_name}',
-            '--name', function_name,
+            '-f', path_to_faas_configuration,
+            '--filter', function_name,
             '-g', self.endpoint,
             ' '.join(env_options),
             _out=self.__file_out)
