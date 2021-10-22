@@ -1,6 +1,8 @@
 import os.path
+import re
+from io import StringIO
 
-import sh as sh
+import sh
 
 
 def build_env_options(env):
@@ -13,14 +15,12 @@ class FaasClient:
         self.endpoint = f'{gateway_url}:{gateway_port}'
         self.__username = username
         self.__password = password
-        self.__file_out = open('/tmp/output', 'a')
 
     def login(self):
         result = self.__cli('login',
                             '-g', self.endpoint,
                             '--username', self.__username,
-                            '--password', self.__password,
-                            _out=self.__file_out)
+                            '--password', self.__password)
         return result.exit_code
 
     def build(self, path_to_faas_configuration, function_name):
@@ -48,9 +48,20 @@ class FaasClient:
             '-f', path_to_faas_configuration,
             '--filter', function_name,
             '-g', self.endpoint,
-            ' '.join(env_options),
-            _out=self.__file_out)
+            ' '.join(env_options))
         return result.exit_code
+
+    def is_ready(self, function_name):
+        output_buffer = StringIO()
+        result = self.__cli(
+            'describe', function_name,
+            '-g', self.endpoint,
+            _out=output_buffer
+        )
+        assert result.exit_code == 0
+        description = output_buffer.getvalue()
+        m = re.search(r'Status:\s*(.*)\n', description)
+        return m.group(1) == 'Ready' if m else False
 
 
 class FaasClientFactory:
