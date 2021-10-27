@@ -1,34 +1,9 @@
-namespace Softozor.HasuraHandling;
+namespace Softozor.HasuraHandling.Exceptions;
 
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using GraphQL;
-
-[Serializable]
-public class UnableToHandleException : Exception
-{
-    public UnableToHandleException()
-    {
-    }
-
-    public UnableToHandleException(string message)
-        : base(message)
-    {
-    }
-
-    public UnableToHandleException(string message, Exception inner)
-        : base(message, inner)
-    {
-    }
-
-    protected UnableToHandleException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-    }
-
-    public int StatusCode { get; set; }
-}
 
 [Serializable]
 public class GraphqlException : Exception

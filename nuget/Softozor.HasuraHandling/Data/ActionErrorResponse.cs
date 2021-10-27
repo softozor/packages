@@ -5,15 +5,15 @@ using Newtonsoft.Json;
 public class ActionErrorResponse
 {
     [JsonConstructor]
-    public ActionErrorResponse(string message, string code)
+    public ActionErrorResponse(string message, ErrorExtensions? extensions)
     {
         this.Message = message;
-        this.Code = code;
+        this.Extensions = extensions;
     }
 
     [JsonProperty("message")]
     public string Message { get; }
 
-    [JsonProperty("code")]
-    public string Code { get; }
+    [JsonProperty("extensions")]
+    public ErrorExtensions? Extensions { get; }
 }

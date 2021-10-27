@@ -22,15 +22,3 @@ public class ActionRequestPayload<TInputType>
     [JsonProperty("session_variables")]
     public HasuraSessionVariables SessionVariables { get; }
 }
-
-public class HasuraAction
-{
-    [JsonConstructor]
-    public HasuraAction(string name)
-    {
-        this.Name = name;
-    }
-
-    [JsonProperty("name")]
-    public string Name { get; }
-}
