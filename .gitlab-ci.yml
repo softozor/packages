@@ -8,7 +8,6 @@ stages:
 variables:
   CONFIGURATION: Release
   DOTNET_VERSION: "6.0"
-  DOTNET_IMAGE: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}.100-rc.2-alpine3.14-amd64
   GIT_SUBMODULE_STRATEGY: recursive
   NUGET_PACKAGES_DIRECTORY: .nuget
   SOURCE_NAME: gitlab-softozor-packages
@@ -19,7 +18,7 @@ variables:
 .publish-nuget: &publish-nuget
 - dotnet nuget add source "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/packages/nuget/index.json" --name ${SOURCE_NAME} --username $GITLAB_USER_LOGIN --password $PRIVATE_ACCESS_TOKEN --store-password-in-clear-text
 - python3 /usr/local/bin/set_assembly_version.py -f ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj -v $PACKAGE_VERSION
-- dotnet pack --no-build -c ${CONFIGURATION} ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj
+- dotnet pack -c ${CONFIGURATION} ${BASE_DIR}/${PACKAGE_NAME}/${PACKAGE_NAME}.csproj
 - dotnet nuget push ${BASE_DIR}/${PACKAGE_NAME}/bin/${CONFIGURATION}/*.nupkg --source ${SOURCE_NAME}
 
 .publish-dotnet-patch: &publish-dotnet-patch
@@ -89,7 +88,7 @@ publish-alpine-with-file:
 
 build:
   stage: build
-  image: $DOTNET_IMAGE
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
   variables:
     BASE_DIR: ./nuget
   before_script:
@@ -105,7 +104,7 @@ build:
 
 dotnet-tests:
   stage: test
-  image: $DOTNET_IMAGE
+  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
   variables:
     BASE_DIR: ./nuget
   before_script:
