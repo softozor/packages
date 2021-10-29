@@ -8,6 +8,7 @@ stages:
 variables:
   CONFIGURATION: Release
   DOTNET_VERSION: "6.0"
+  DOTNET_IMAGE: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}.100-rc.2-alpine3.14-amd64
   GIT_SUBMODULE_STRATEGY: recursive
   NUGET_PACKAGES_DIRECTORY: .nuget
   SOURCE_NAME: gitlab-softozor-packages
@@ -88,7 +89,7 @@ publish-alpine-with-file:
 
 build:
   stage: build
-  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
+  image: $DOTNET_IMAGE
   variables:
     BASE_DIR: ./nuget
   before_script:
@@ -104,7 +105,7 @@ build:
 
 dotnet-tests:
   stage: test
-  image: mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-alpine-amd64
+  image: $DOTNET_IMAGE
   variables:
     BASE_DIR: ./nuget
   before_script:
