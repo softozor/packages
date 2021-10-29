@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -7,12 +7,14 @@
         <PackageDescription>Necessary boilerplate code for serverless functions called by hasura actions.</PackageDescription>
 		<PackageProjectUrl>http://gitlab.hidora.com/softozor/faas-templates</PackageProjectUrl>
 		<RepositoryUrl>http://gitlab.hidora.com/softozor/faas-templates</RepositoryUrl>
+		<IsPackable>true</IsPackable>
 		<PackageTags>faas, hasura, graphql</PackageTags>
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageId>Softozor.HasuraHandling</PackageId>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Version>1.0.0</Version>
 		<Nullable>enable</Nullable>
+		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -26,6 +28,7 @@
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<NoWarn>1701;1702;NU5104</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -34,16 +37,32 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<NoWarn>1701;1702;NU5104</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="GraphQL.Client" Version="3.2.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0-rc.2.21480.5" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

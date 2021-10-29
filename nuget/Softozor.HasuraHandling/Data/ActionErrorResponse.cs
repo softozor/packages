@@ -5,7 +5,13 @@ using Newtonsoft.Json;
 public class ActionErrorResponse
 {
     [JsonConstructor]
-    public ActionErrorResponse(string message, ErrorExtensions? extensions)
+    public ActionErrorResponse(string message)
+    {
+        this.Message = message;
+    }
+
+    [JsonConstructor]
+    public ActionErrorResponse(string message, ErrorExtensions extensions)
     {
         this.Message = message;
         this.Extensions = extensions;
