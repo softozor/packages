@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Authors>softozor</Authors>
-        <PackageId>Shopozor.GraphqlClient</PackageId>
         <Product>Softozor GraphQL client</Product>
         <PackageDescription>Specific graphql client library for the needs of the shopozor serverless functions.</PackageDescription>
         <PackageProjectUrl>http://gitlab.hidora.com/softozor/packages</PackageProjectUrl>
