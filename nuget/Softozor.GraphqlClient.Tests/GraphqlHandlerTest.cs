@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphQL;
 using GraphQL.Client.Abstractions;
-using HasuraHandling;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -55,7 +54,7 @@ public class GraphqlHandlerTest
         Func<Task> act = async () => await this.sut!.Query(req);
 
         // Then I get a graphql exception thrown
-        act.Should().Throw<GraphqlException>();
+        act.Should().ThrowAsync<GraphqlClientException>();
     }
 
     [Test]
@@ -85,6 +84,6 @@ public class GraphqlHandlerTest
         Func<Task> act = async () => await this.sut!.Mutate(req);
 
         // Then I get a graphql exception thrown
-        act.Should().Throw<GraphqlException>();
+        act.Should().ThrowAsync<GraphqlClientException>();
     }
 }

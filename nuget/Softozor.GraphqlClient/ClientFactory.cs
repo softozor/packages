@@ -13,12 +13,9 @@ public class ClientFactory : IClientFactory
 
     private readonly string graphqlEndpoint;
 
-    public ClientFactory(IEnvironmentSetup setup, ISecretReader secretReader)
+    public ClientFactory(ISecretReader secretReader)
     {
-        this.adminSecret = setup.IsDevelopment()
-            ? Environment.GetEnvironmentVariable("HASURA_ADMIN_SECRET") ??
-              throw new GraphqlClientException("HASURA_ADMIN_SECRET variable not defined")
-            : secretReader.GetSecret(FaasKeys.HasuraSecret);
+        this.adminSecret = secretReader.GetSecret(FaasKeys.HasuraSecret);
 
         this.graphqlEndpoint = Environment.GetEnvironmentVariable("GRAPHQL_API") ??
                                throw new GraphqlClientException("GRAPHQL_API variable not defined");

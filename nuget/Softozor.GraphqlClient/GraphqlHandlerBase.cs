@@ -49,7 +49,7 @@ public class GraphqlHandlerBase
             this.Logger.LogError($"First error: {firstError}");
             var serializedVariables = JsonConvert.SerializeObject(req.Variables);
             var errorMsg = $"Failed to execute query {req.OperationName} with variables {serializedVariables}";
-            throw new GraphqlException(errorMsg, resp.Errors);
+            throw new GraphqlClientException(errorMsg, resp.Errors);
         }
     }
 }
