@@ -42,14 +42,16 @@ public class GraphqlHandlerBase
 
     protected void CheckGraphqlErrors<TOutput>(GraphQLResponse<TOutput> resp, GraphQLRequest req)
     {
-        if (resp.Errors?.Length > 0)
+        if (!(resp.Errors?.Length > 0))
         {
-            this.Logger.LogError($"Got {resp.Errors.Length} graphql errors");
-            var firstError = JsonConvert.SerializeObject(resp.Errors.First());
-            this.Logger.LogError($"First error: {firstError}");
-            var serializedVariables = JsonConvert.SerializeObject(req.Variables);
-            var errorMsg = $"Failed to execute query {req.OperationName} with variables {serializedVariables}";
-            throw new GraphqlClientException(errorMsg, resp.Errors);
+            return;
         }
+
+        this.Logger.LogError($"Got {resp.Errors.Length} graphql errors");
+        var firstError = JsonConvert.SerializeObject(resp.Errors.First());
+        this.Logger.LogError($"First error: {firstError}");
+        var serializedVariables = JsonConvert.SerializeObject(req.Variables);
+        var errorMsg = $"Failed to execute query {req.OperationName} with variables {serializedVariables}";
+        throw new GraphqlClientException(errorMsg, resp.Errors);
     }
 }
