@@ -1,6 +1,6 @@
 namespace Softozor.HasuraHandling.Interfaces;
 
-public interface ISyncActionHandler<TInputType, TOutputType>
+public interface ISyncActionHandler<TInput, TOutput>
 {
-    TOutputType Handle(TInputType input);
+    TOutput Handle(TInput input);
 }
