@@ -60,7 +60,7 @@ public static class ActionHandlerWrapper
         }
     }
 
-    private static async Task<TInput> ExtractInput<TInput>(HttpContext http)
+    public static async Task<TInput> ExtractInput<TInput>(HttpContext http)
         where TInput : class
     {
         var payload = await http.Request.ReadFromJsonAsync<ActionRequestPayload<TInput>>();
@@ -70,14 +70,14 @@ public static class ActionHandlerWrapper
         return input;
     }
 
-    private static async Task IssueBadRequest(HttpContext http, Exception ex)
+    public static async Task IssueBadRequest(HttpContext http, Exception ex)
     {
         var error = new ActionErrorResponse(ex.Message);
         http.Response.StatusCode = StatusCodes.Status400BadRequest;
         await http.Response.WriteAsJsonAsync(error);
     }
 
-    private static async Task IssueInternalServerError(HttpContext http, Exception ex)
+    public static async Task IssueInternalServerError(HttpContext http, Exception ex)
     {
         var error = new ActionErrorResponse(ex.Message);
         http.Response.StatusCode = StatusCodes.Status500InternalServerError;
