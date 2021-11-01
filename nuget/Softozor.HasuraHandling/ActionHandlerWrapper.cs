@@ -8,16 +8,15 @@ using Softozor.HasuraHandling.Data;
 using Softozor.HasuraHandling.Exceptions;
 using Softozor.HasuraHandling.Properties;
 
-public static class HandlerWrapper
+public static class ActionHandlerWrapper
 {
     [SuppressMessage(
         "Design",
         "CA1031: Do not catch general exception types",
         Justification =
             "That's the last step before outputting to the user, therefore we need to catch everything and return a useful error message")]
-    public static async Task HandleSyncAction<TInput, TOutput>(HttpContext http, Func<TInput, TOutput> handle)
+    public static async Task HandleSync<TInput, TOutput>(HttpContext http, Func<TInput, TOutput> handle)
         where TInput : class
-        where TOutput : class
     {
         var input = await ExtractInput<TInput>(http);
 
@@ -41,9 +40,8 @@ public static class HandlerWrapper
         "CA1031: Do not catch general exception types",
         Justification =
             "That's the last step before outputting to the user, therefore we need to catch everything and return a useful error message")]
-    public static async Task HandleAsyncAction<TInput, TOutput>(HttpContext http, Func<TInput, Task<TOutput>> handle)
+    public static async Task HandleAsync<TInput, TOutput>(HttpContext http, Func<TInput, Task<TOutput>> handle)
         where TInput : class
-        where TOutput : class
     {
         var input = await ExtractInput<TInput>(http);
 

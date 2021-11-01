@@ -69,6 +69,9 @@ lint:
   image: softozor/python-lint:$TOOLS_SHA
   script:
   - autopep8 -rd . --exit-code
+  only:
+    changes:
+    - pypi/**/*
 
 publish-alpine-with-file:
   stage: fixtures
