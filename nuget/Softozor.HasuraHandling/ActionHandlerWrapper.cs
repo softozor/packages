@@ -27,7 +27,7 @@ public static class ActionHandlerWrapper
         }
         catch (HasuraFunctionException ex)
         {
-            await IssueBadRequest(http, ex);
+            await IssueError(http, ex);
         }
         catch (Exception ex)
         {
@@ -52,7 +52,7 @@ public static class ActionHandlerWrapper
         }
         catch (HasuraFunctionException ex)
         {
-            await IssueBadRequest(http, ex);
+            await IssueError(http, ex);
         }
         catch (Exception ex)
         {
@@ -70,10 +70,10 @@ public static class ActionHandlerWrapper
         return input;
     }
 
-    public static async Task IssueBadRequest(HttpContext http, Exception ex)
+    public static async Task IssueError(HttpContext http, HasuraFunctionException ex)
     {
         var error = new ActionErrorResponse(ex.Message);
-        http.Response.StatusCode = StatusCodes.Status400BadRequest;
+        http.Response.StatusCode = ex.ErrorCode;
         await http.Response.WriteAsJsonAsync(error);
     }
 
