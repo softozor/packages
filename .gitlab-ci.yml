@@ -232,6 +232,45 @@ major graphql client dotnet:
     changes:
       - nuget/Softozor.GraphqlClient/**/*
 
+patch fusionauth dotnet:
+  <<: *publish-dotnet-patch
+  variables:
+    BASE_DIR: ./nuget
+    PACKAGE_NAME: Softozor.FusionAuth
+    INCREASE_VERSION: patch
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FUSIONAUTH
+  only:
+    refs:
+      - master
+    changes:
+      - nuget/Softozor.FusionAuth/**/*
+
+minor fusionauth dotnet:
+  <<: *publish-dotnet-minor
+  variables:
+    BASE_DIR: ./nuget
+    PACKAGE_NAME: Softozor.FusionAuth
+    INCREASE_VERSION: minor
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FUSIONAUTH
+  only:
+    refs:
+      - master
+    changes:
+      - nuget/Softozor.FusionAuth/**/*
+
+major fusionauth dotnet:
+  <<: *publish-dotnet-major
+  variables:
+    BASE_DIR: ./nuget
+    PACKAGE_NAME: Softozor.FusionAuth
+    INCREASE_VERSION: major
+    MIN_PACKAGE_VERSION: $MIN_PACKAGE_VERSION_FUSIONAUTH
+  only:
+    refs:
+      - master
+    changes:
+      - nuget/Softozor.FusionAuth/**/*
+
 patch faas client:
   <<: *publish-pypi-patch
   variables:
