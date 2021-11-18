@@ -8,13 +8,13 @@ import sh
 class HasuraClient:
     def __init__(self, hasura_endpoint, admin_secret, database_name):
         self.__cli = sh.Command('hasura')
-        self.__endpoint = hasura_endpoint
+        self.endpoint = hasura_endpoint
         self.__database_name = database_name
         self.__admin_secret = admin_secret
 
     def apply_migrations(self, project_folder):
         result = self.__cli('migrate', 'apply',
-                            '--endpoint', self.__endpoint,
+                            '--endpoint', self.endpoint,
                             '--project', project_folder,
                             '--database-name', self.__database_name,
                             '--admin-secret', self.__admin_secret,
@@ -26,7 +26,7 @@ class HasuraClient:
 
     def apply_metadata(self, project_folder):
         result = self.__cli('metadata', 'apply',
-                            '--endpoint', self.__endpoint,
+                            '--endpoint', self.endpoint,
                             '--project', project_folder,
                             '--admin-secret', self.__admin_secret,
                             '--skip-update-check',
@@ -39,12 +39,12 @@ class HasuraClient:
                                for item in os.listdir(migrations_folder)]
         statuses_io = StringIO()
         self.__cli('migrate', 'status',
-                              '--endpoint', self.__endpoint,
+                              '--endpoint', self.endpoint,
                               '--project', project_folder,
                               '--database-name', self.__database_name,
                               '--admin-secret', self.__admin_secret,
                               '--skip-update-check',
-                              _out=statuses_io)
+                   _out=statuses_io)
         result = 0
         statuses = statuses_io.getvalue()
         for timestamp in relevant_timestamps:
@@ -57,7 +57,7 @@ class HasuraClient:
             project_folder)
         result = self.__cli('migrate', 'apply',
                             '--down', nb_migrations,
-                            '--endpoint', self.__endpoint,
+                            '--endpoint', self.endpoint,
                             '--project', project_folder,
                             '--database-name', self.__database_name,
                             '--admin-secret', self.__admin_secret,
