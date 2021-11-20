@@ -141,6 +141,7 @@ jelastic-client-tests:
         -n 4 \
         --api-url $JELASTIC_API_URL \
         --api-token $JELASTIC_ACCESS_TOKEN \
+        --base-url ${CI_PROJECT_URL}/-/raw/master/pypi/jelastic-client \
         --test-data-dir ./data \
         --jelastic-version $JELASTIC_VERSION \
         --commit-sha $CI_COMMIT_SHORT_SHA

@@ -1,5 +1,7 @@
 import json
 
+import requests
+
 from .core import ApiClient, BaseClient, who_am_i
 
 
@@ -15,6 +17,11 @@ class JpsClient(BaseClient):
         with open(filename) as file:
             manifest_content = file.read()
             return self.install(manifest_content, env_name, settings)
+
+    def install_from_url(self, url: str, env_name: str = None, settings: dict = None) -> str:
+        response = requests.get(url)
+        manifest_content = response.text
+        return self.install(manifest_content, env_name, settings)
 
     def install(self, manifest_content: str, env_name: str = None, settings: dict = None) -> str:
         response = self._execute(

@@ -2,6 +2,7 @@ import os
 import random
 
 import pytest
+import requests
 from _pytest.fixtures import FixtureRequest
 
 import jelastic_client
@@ -23,6 +24,9 @@ def pytest_addoption(parser):
     )
     parser.addoption(
         "--api-token", action="store", required=True, help="jelastic access token"
+    )
+    parser.addoption(
+        "--base-url", action="store", default="http://gitlab.hidora.com/softozor/packages/-/raw/master/pypi/jelastic-client", help="project base url for raw files"
     )
     parser.addoption(
         "--test-data-dir", action="store", default="./data", help="path to test data folder"
@@ -51,30 +55,67 @@ def api_token(request: FixtureRequest) -> str:
 
 
 @pytest.fixture
+def base_url(request: FixtureRequest) -> str:
+    return request.config.getoption("--base-url")
+
+
+@pytest.fixture
 def test_data_dir(request: FixtureRequest) -> str:
     return request.config.getoption("--test-data-dir")
 
 
 @pytest.fixture
-def valid_manifest(test_data_dir) -> str:
+def valid_manifest_file(test_data_dir) -> str:
     return os.path.join(test_data_dir, "valid_manifest.jps")
 
 
 @pytest.fixture
-def manifest_with_settings(test_data_dir) -> str:
+def valid_manifest_url(base_url) -> str:
+    url = f"{base_url}/test/data/valid_manifest.jps"
+    response = requests.get(url)
+    assert 200 == response.status_code
+    return url
+
+
+@pytest.fixture
+def manifest_file_with_settings(test_data_dir) -> str:
     return os.path.join(test_data_dir, "manifest_with_settings.jps")
 
 
 @pytest.fixture
-def invalid_manifest(test_data_dir) -> str:
+def manifest_url_with_settings(base_url) -> str:
+    url = f"{base_url}/test/data/manifest_with_settings.jps"
+    response = requests.get(url)
+    assert 200 == response.status_code
+    return url
+
+
+@pytest.fixture
+def invalid_manifest_file(test_data_dir) -> str:
     return os.path.join(test_data_dir, "invalid_manifest.jps")
 
 
 @pytest.fixture
-def non_existent_manifest(test_data_dir) -> str:
+def invalid_manifest_url(base_url) -> str:
+    url = f"{base_url}/test/data/invalid_manifest.jps"
+    response = requests.get(url)
+    assert 200 == response.status_code
+    return url
+
+
+@pytest.fixture
+def non_existent_manifest_file(test_data_dir) -> str:
     filename = os.path.join(test_data_dir, "non_existent_manifest.jps")
     assert not os.path.exists(filename)
     return filename
+
+
+@pytest.fixture
+def non_existent_manifest_url(base_url) -> str:
+    url = f"{base_url}/test/data/non_existent_manifest.jps"
+    response = requests.get(url)
+    assert 404 == response.status_code
+    return url
 
 
 @pytest.fixture
