@@ -9,7 +9,8 @@ install_requires = [
 
 test_requires = [
     "pytest",
-    "pytest-xdist"
+    "pytest-xdist",
+    "requests"
 ]
 
 package_version = os.environ.get("PACKAGE_VERSION", "0.0.0")
