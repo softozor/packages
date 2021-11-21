@@ -15,6 +15,7 @@ from jelastic_client import (
     DockerSettings,
     NodeSettings
 )
+from jelastic_client.env_info import EnvInfo
 from test_utils import get_new_random_env_name
 
 
@@ -155,6 +156,22 @@ def new_env_name(control_client: ControlClient, commit_sha: str, worker_id: str)
     env_info = control_client.get_env_info(env_name)
     if env_info.exists():
         control_client.delete_env(env_name)
+
+
+@pytest.fixture
+def created_environment(control_client: ControlClient, new_env_name) -> EnvInfo:
+    env = EnvSettings(shortdomain=new_env_name)
+    sql_node = NodeSettings(
+        fixedCloudlets=3, flexibleCloudlets=4, nodeType="postgresql")
+    docker_settings = DockerSettings(image="alpine")
+    docker_node = NodeSettings(
+        docker=docker_settings, flexibleCloudlets=4, nodeType="docker")
+    env_info = control_client.create_environment(
+        env, [sql_node, docker_node])
+    yield env_info
+    env_info = control_client.get_env_info(new_env_name)
+    if env_info.exists():
+        control_client.delete_env(new_env_name)
 
 
 @pytest.fixture

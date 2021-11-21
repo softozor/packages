@@ -7,6 +7,7 @@ from jelastic_client import (
     DockerSettings
 )
 from jelastic_client.core import JelasticClientException
+from jelastic_client.env_info import EnvInfo
 
 
 def test_control_client_delete_non_existent_environment_raises_exception(
@@ -95,3 +96,18 @@ def test_control_client_create_environment_with_multiple_nodes_runs_environment(
     assert new_env_name == actual_env_name
     actual_env_info = control_client.get_env_info(actual_env_name)
     assert actual_env_info.is_running()
+
+
+def test_control_client_clone_environment_runs_cloned_environment(
+        control_client: ControlClient,
+        created_environment: EnvInfo,
+        new_env_name: str):
+    # Arrange
+
+    # Act
+    cloned_environment = control_client.clone_env(
+        created_environment.env_name(), new_env_name)
+
+    # Assert
+    assert cloned_environment.is_running()
+    assert len(created_environment.nodes()) == len(cloned_environment.nodes())

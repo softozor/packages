@@ -32,6 +32,11 @@ class ControlClient(BaseClient):
             envName=env_name
         )
 
+    def clone_env(self, src_env_name: str, dst_env_name: str) -> EnvInfo:
+        response = self._execute(
+            who_am_i(), srcEnvName=src_env_name, dstEnvName=dst_env_name)
+        return EnvInfo(response["response"])
+
     def get_env_info(self, env_name: str) -> EnvInfo:
         try:
             response = self._execute(
