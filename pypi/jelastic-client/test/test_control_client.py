@@ -112,3 +112,22 @@ def test_control_client_clone_environment_runs_cloned_environment(
     # Assert
     assert cloned_environment.is_running()
     assert len(created_environment.nodes()) == len(cloned_environment.nodes())
+
+
+def test_control_client_start_stopped_environment(
+        control_client: ControlClient,
+        created_environment: EnvInfo
+):
+    # Arrange
+    assert created_environment.is_running()
+    env_name = created_environment.env_name()
+    control_client.stop_env(env_name)
+    env_info = control_client.get_env_info(env_name)
+    assert not env_info.is_running()
+
+    # Act
+    control_client.start_env(env_name)
+
+    # Assert
+    env_info = control_client.get_env_info(env_name)
+    assert env_info.is_running()
