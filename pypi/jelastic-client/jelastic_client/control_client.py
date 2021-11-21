@@ -24,7 +24,7 @@ class ControlClient(BaseClient):
         env_json = json.dumps(env)
         nodes_json = json.dumps(nodes)
         response = self._execute(who_am_i(), env=env_json, nodes=nodes_json)
-        return EnvInfo(response["response"])
+        return EnvInfo(response)
 
     def delete_env(self, env_name: str) -> None:
         self._execute(
