@@ -27,7 +27,9 @@ def pytest_addoption(parser):
         "--api-token", action="store", required=True, help="jelastic access token"
     )
     parser.addoption(
-        "--base-url", action="store", default="http://gitlab.hidora.com/softozor/packages/-/raw/master/pypi/jelastic-client", help="project base url for raw files"
+        "--base-url", action="store",
+        default="http://gitlab.hidora.com/softozor/packages/-/raw/master/pypi/jelastic-client",
+        help="project base url for raw files"
     )
     parser.addoption(
         "--test-data-dir", action="store", default="./data", help="path to test data folder"
@@ -172,6 +174,18 @@ def created_environment(control_client: ControlClient, new_env_name) -> EnvInfo:
     env_info = control_client.get_env_info(new_env_name)
     if env_info.exists():
         control_client.delete_env(new_env_name)
+
+
+@pytest.fixture
+def cloned_environment(control_client: ControlClient, created_environment) -> EnvInfo:
+    created_env_name = created_environment.env_name()
+    cloned_env_name = created_env_name + "-clone"
+    env_info = control_client.clone_env(
+        created_env_name, cloned_env_name)
+    yield env_info
+    env_info = control_client.get_env_info(cloned_env_name)
+    if env_info.exists():
+        control_client.delete_env(cloned_env_name)
 
 
 @pytest.fixture

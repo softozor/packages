@@ -100,14 +100,11 @@ def test_control_client_create_environment_with_multiple_nodes_runs_environment(
 
 def test_control_client_clone_environment_runs_cloned_environment(
         control_client: ControlClient,
-        created_environment: EnvInfo):
+        created_environment: EnvInfo,
+        cloned_environment: EnvInfo):
     # Arrange
-    created_env_name = created_environment.env_name()
-    cloned_env_name = created_env_name + "-clone"
 
     # Act
-    cloned_environment = control_client.clone_env(
-        created_env_name, cloned_env_name)
 
     # Assert
     assert cloned_environment.is_running()
