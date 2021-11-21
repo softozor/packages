@@ -124,7 +124,7 @@ def test_jps_client_install_from_file_non_existent_manifest_file_raises_exceptio
     # Arrange
 
     # Act / Assert
-    with pytest.raises(OSError):
+    with pytest.raises(JelasticClientException):
         jps_client.install_from_file(non_existent_manifest_file, new_env_name)
 
 
@@ -135,7 +135,7 @@ def test_jps_client_install_from_url_non_existent_manifest_url_raises_exception(
     # Arrange
 
     # Act / Assert
-    with pytest.raises(OSError):
+    with pytest.raises(JelasticClientException):
         jps_client.install_from_url(non_existent_manifest_url, new_env_name)
 
 
