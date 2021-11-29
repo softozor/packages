@@ -80,7 +80,7 @@ publish-alpine-with-file:
     DOCKER_IMAGE: softozor/alpine-with-file
     DOCKERFILE_FOLDER: ./pypi/jelastic-client/test/docker/alpine-with-file
   before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker login -u $DOCKER_HUB_REGISTRY_USER -p $DOCKER_HUB_REGISTRY_PASSWORD $DOCKER_HUB_REGISTRY
   script:
   - docker build $DOCKERFILE_FOLDER -t $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA -t $DOCKER_IMAGE:latest
   - docker push $DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA
