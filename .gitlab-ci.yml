@@ -144,7 +144,8 @@ jelastic-client-tests:
         --base-url ${CI_PROJECT_URL}/-/raw/master/pypi/jelastic-client \
         --test-data-dir ./data \
         --jelastic-version $JELASTIC_VERSION \
-        --commit-sha $CI_COMMIT_SHORT_SHA
+        --commit-sha $CI_COMMIT_SHORT_SHA \
+        --jelastic-user-email $JELASTIC_USER_EMAIL
   artifacts:
     reports:
       junit:

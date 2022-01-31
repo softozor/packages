@@ -15,6 +15,7 @@ from jelastic_client import (
     DockerSettings,
     NodeSettings
 )
+from jelastic_client.account_client import AccountClient
 from jelastic_client.env_info import EnvInfo
 from test_utils import get_new_random_env_name
 
@@ -39,6 +40,9 @@ def pytest_addoption(parser):
     )
     parser.addoption(
         "--commit-sha", action="store", required=True, help="commit short sha (8 characters)"
+    )
+    parser.addoption(
+        "--jelastic-user-email", action="store", required=True, help="email of Jelastic user account"
     )
 
 
@@ -65,6 +69,11 @@ def base_url(request: FixtureRequest) -> str:
 @pytest.fixture
 def test_data_dir(request: FixtureRequest) -> str:
     return request.config.getoption("--test-data-dir")
+
+
+@pytest.fixture
+def jelastic_user_email(request: FixtureRequest) -> str:
+    return request.config.getoption("--jelastic-user-email")
 
 
 @pytest.fixture
@@ -149,6 +158,11 @@ def control_client(client_factory: JelasticClientFactory) -> ControlClient:
 @pytest.fixture
 def file_client(client_factory: JelasticClientFactory) -> FileClient:
     return client_factory.create_file_client()
+
+
+@pytest.fixture
+def account_client(client_factory: JelasticClientFactory) -> AccountClient:
+    return client_factory.create_account_client()
 
 
 @pytest.fixture

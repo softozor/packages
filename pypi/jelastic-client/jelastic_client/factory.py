@@ -1,6 +1,7 @@
-from .file_client import FileClient
+from .account_client import AccountClient
 from .control_client import ControlClient
 from .core import ApiClient
+from .file_client import FileClient
 from .jps_client import JpsClient
 
 
@@ -16,3 +17,6 @@ class JelasticClientFactory:
 
     def create_file_client(self) -> FileClient:
         return FileClient(self.api_client)
+
+    def create_account_client(self) -> AccountClient:
+        return AccountClient(self.api_client)
