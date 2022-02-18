@@ -46,12 +46,6 @@ def pytest_addoption(parser):
     )
 
 
-# TODO: remove
-@pytest.fixture
-def worker_id() -> str:
-    return "master"
-
-
 @pytest.fixture(autouse=True, scope="session")
 def random_seed() -> None:
     random.seed("jelastic-client-integration-tests")
