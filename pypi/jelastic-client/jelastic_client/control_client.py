@@ -57,3 +57,29 @@ class ControlClient(BaseClient):
                 }
             }
         return EnvInfo(response)
+
+    def get_container_env_vars_by_group(self, env_name: str, node_group: str) -> dict:
+        response = self._execute(
+            who_am_i(), envName=env_name, nodeGroup=node_group)
+        return response["object"]
+
+    def get_container_env_vars(self, env_name: str, node_id: int):
+        response = self._execute(
+            who_am_i(), envName=env_name, nodeId=node_id)
+        return response["object"]
+
+    def remove_container_env_vars(self, env_name: str, vars: [str], node_group: str = None, node_id: str = None):
+        self._execute(
+            who_am_i(), envName=env_name, nodeGroup=node_group, nodeId=node_id, vars=json.dumps(vars))
+
+    def add_container_env_vars(self, env_name: str, vars: dict, node_group: str = None, node_id: int = None):
+        self._execute(
+            who_am_i(), envName=env_name, nodeGroup=node_group, nodeId=node_id, vars=json.dumps(vars))
+
+    def set_container_env_vars(self, env_name: str, node_id: int, vars: [str]):
+        self._execute(
+            who_am_i(), envName=env_name, nodeId=node_id, vars=json.dumps(vars))
+
+    def set_container_env_vars_by_group(self, env_name: str, node_group: str, vars: [str]):
+        self._execute(
+            who_am_i(), envName=env_name, nodeGroup=node_group, data=json.dumps(vars))

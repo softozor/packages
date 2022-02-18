@@ -46,6 +46,12 @@ def pytest_addoption(parser):
     )
 
 
+# TODO: remove
+@pytest.fixture
+def worker_id() -> str:
+    return "master"
+
+
 @pytest.fixture(autouse=True, scope="session")
 def random_seed() -> None:
     random.seed("jelastic-client-integration-tests")
@@ -191,7 +197,7 @@ def created_environment(control_client: ControlClient, new_env_name) -> EnvInfo:
 
 
 @pytest.fixture
-def cloned_environment(control_client: ControlClient, created_environment) -> EnvInfo:
+def cloned_environment(control_client: ControlClient, created_environment: EnvInfo) -> EnvInfo:
     created_env_name = created_environment.env_name()
     cloned_env_name = created_env_name + "-clone"
     env_info = control_client.clone_env(
@@ -200,6 +206,16 @@ def cloned_environment(control_client: ControlClient, created_environment) -> En
     env_info = control_client.get_env_info(cloned_env_name)
     if env_info.exists():
         control_client.delete_env(cloned_env_name)
+
+
+@pytest.fixture
+def valid_environment_with_env_vars(
+        jps_client: JpsClient, control_client: ControlClient, new_env_name: str, valid_manifest_file: str) -> str:
+    jps_client.install_from_file(valid_manifest_file, new_env_name)
+    yield new_env_name
+    env_info = control_client.get_env_info(new_env_name)
+    if env_info.exists():
+        control_client.delete_env(new_env_name)
 
 
 @pytest.fixture

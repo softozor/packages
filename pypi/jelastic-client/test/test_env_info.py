@@ -205,33 +205,36 @@ def test_env_info_exists(input_dict: dict, expected_exists: bool):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
                         "url": "http://irrelevant.com"
                     }
                 ],
-            }, [Node(int_ip="10.102.15.248", node_type="docker", node_group="cp", url="http://irrelevant.com")],
+            }, [Node(id=114695, int_ip="10.102.15.248", node_type="docker", node_group="cp", url="http://irrelevant.com")],
             id="single node"
         ),
         pytest.param(
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "sqldb",
                         "nodeType": "postgresql",
                         "intIP": "10.102.15.249",
                         "url": "http://irrelevant.com"
                     }
                 ],
-            }, [Node(int_ip="10.102.15.248", node_type="docker", node_group="cp", url="http://irrelevant.com"),
-                Node(int_ip="10.102.15.249", node_type="postgresql", node_group="sqldb", url="http://irrelevant.com")],
+            }, [Node(id=114695, int_ip="10.102.15.248", node_type="docker", node_group="cp", url="http://irrelevant.com"),
+                Node(id=114696, int_ip="10.102.15.249", node_type="postgresql", node_group="sqldb", url="http://irrelevant.com")],
             id="multiple nodes"
         ),
     ]
@@ -254,6 +257,7 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -270,6 +274,7 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -286,6 +291,7 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -302,6 +308,7 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -318,24 +325,28 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "bl",
                         "nodeType": "docker",
                         "intIP": "10.102.15.258",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114697,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.249",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114698,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.250",
@@ -353,24 +364,28 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.249",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114697,
                         "nodeGroup": "cp",
                         "nodeType": "ubuntu-vps",
                         "intIP": "10.102.15.259",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114698,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.250",
@@ -388,30 +403,35 @@ def test_env_info_nodes(input_dict: dict, expected_nodes: Nodes):
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.249",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114697,
                         "nodeGroup": "cp",
                         "nodeType": "ubuntu-vps",
                         "intIP": "10.102.15.259",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114698,
                         "nodeGroup": "cp",
                         "nodeType": "ubuntu-vps",
                         "intIP": "10.102.15.260",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114699,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.250",
@@ -447,6 +467,7 @@ def test_env_info_get_node_ips_returns_filtered_ips(input_dict: dict, node_group
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -464,12 +485,14 @@ def test_env_info_get_node_ips_returns_filtered_ips(input_dict: dict, node_group
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.249",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -477,6 +500,7 @@ def test_env_info_get_node_ips_returns_filtered_ips(input_dict: dict, node_group
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114697,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.250",
@@ -494,12 +518,14 @@ def test_env_info_get_node_ips_returns_filtered_ips(input_dict: dict, node_group
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.249",
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -507,6 +533,7 @@ def test_env_info_get_node_ips_returns_filtered_ips(input_dict: dict, node_group
                         "url": "http://irrelevant.com"
                     },
                     {
+                        "id": 114697,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.250",
@@ -540,6 +567,7 @@ def test_env_info_get_node_ip_from_name_returns_corresponding_ip(input_dict: dic
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -558,6 +586,7 @@ def test_env_info_get_node_ip_from_name_returns_corresponding_ip(input_dict: dic
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -576,6 +605,7 @@ def test_env_info_get_node_ip_from_name_returns_corresponding_ip(input_dict: dic
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -583,6 +613,7 @@ def test_env_info_get_node_ip_from_name_returns_corresponding_ip(input_dict: dic
                         "url": "http://node89876-local-sha-master-0954606.hidora.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.268",
@@ -618,6 +649,7 @@ def test_env_info_get_node_hostname_from_name_returns_hostname(input_dict: dict,
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -636,6 +668,7 @@ def test_env_info_get_node_hostname_from_name_returns_hostname(input_dict: dict,
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -654,6 +687,7 @@ def test_env_info_get_node_hostname_from_name_returns_hostname(input_dict: dict,
             {
                 "nodes": [
                     {
+                        "id": 114695,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.248",
@@ -661,6 +695,7 @@ def test_env_info_get_node_hostname_from_name_returns_hostname(input_dict: dict,
                         "url": "http://node89876-local-sha-master-0954606.hidora.com"
                     },
                     {
+                        "id": 114696,
                         "nodeGroup": "cp",
                         "nodeType": "docker",
                         "intIP": "10.102.15.268",

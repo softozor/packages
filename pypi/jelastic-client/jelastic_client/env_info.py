@@ -10,6 +10,7 @@ def get_nodes_from_env_info(env_info: dict) -> Nodes:
     raw_nodes = env_info["nodes"]
     for raw_node in raw_nodes:
         node = Node(
+            id=raw_node["id"],
             int_ip=raw_node["intIP"],
             node_type=raw_node["nodeType"],
             node_group=raw_node["nodeGroup"],
