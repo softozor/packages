@@ -191,3 +191,35 @@ def test_jps_client_get_engine_version_returns_supported_engine_version(
 
     # Assert
     assert supported_jelastic_version == actual_version
+
+
+def test_jps_client_install_from_url_valid_manifest_url_returns_installs_in_region_sh1(
+        control_client: ControlClient,
+        jps_client: JpsClient,
+        valid_manifest_url,
+        new_env_name: str):
+    # Arrange
+    expected_domain = f'{new_env_name}.sh1.hidora.com'
+
+    # Act
+    jps_client.install_from_url(valid_manifest_url, new_env_name, region='sh1')
+
+    # Assert
+    env_info = control_client.get_env_info(new_env_name)
+    assert expected_domain == env_info.domain()
+
+
+def test_jps_client_install_from_url_valid_manifest_url_returns_installs_in_region_new(
+        control_client: ControlClient,
+        jps_client: JpsClient,
+        valid_manifest_url,
+        new_env_name: str):
+    # Arrange
+    expected_domain = f'{new_env_name}.hidora.com'
+
+    # Act
+    jps_client.install_from_url(valid_manifest_url, new_env_name, region='new')
+
+    # Assert
+    env_info = control_client.get_env_info(new_env_name)
+    assert expected_domain == env_info.domain()

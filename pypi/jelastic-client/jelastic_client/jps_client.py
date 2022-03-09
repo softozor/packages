@@ -23,20 +23,21 @@ class JpsClient(BaseClient):
             manifest_content = file.read()
             return self.install(manifest_content, env_name, settings)
 
-    def install_from_url(self, url: str, env_name: str = None, settings: dict = None) -> str:
+    def install_from_url(self, url: str, env_name: str = None, settings: dict = None, region: str = None) -> str:
         response = requests.get(url)
         if response.status_code != 200:
             raise JelasticClientException(f"Url not found: {url}")
         manifest_content = response.text
-        return self.install(manifest_content, env_name, settings)
+        return self.install(manifest_content, env_name, settings, region)
 
-    def install(self, manifest_content: str, env_name: str = None, settings: dict = None) -> str:
+    def install(self, manifest_content: str, env_name: str = None, settings: dict = None, region: str = None) -> str:
         response = self._execute(
             who_am_i(),
             jps=manifest_content,
             envName=env_name,
             skipNodeEmails=True,
-            settings=json.dumps(settings)
+            settings=json.dumps(settings),
+            region=region
         )
 
         return response["successText"]
