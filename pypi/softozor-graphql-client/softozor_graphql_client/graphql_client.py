@@ -1,7 +1,9 @@
-from six.moves import urllib
+import json
 from http.cookies import SimpleCookie
 
-import json
+from six.moves import urllib
+
+from softozor_graphql_client.graphql_response import GraphQLResponse
 
 
 class GraphQLClient:
@@ -47,7 +49,9 @@ class GraphQLClient:
             cookies = SimpleCookie()
             if header_cookies:
                 cookies.load(header_cookies)
-            return json.loads(response.read().decode('utf-8')), cookies
+            data = json.loads(response.read().decode('utf-8'))
+            return GraphQLResponse(
+                data=data, cookies=cookies, status_code=response.getcode())
         except urllib.error.HTTPError as e:
             print((e.read()))
             print('')
