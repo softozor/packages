@@ -3,6 +3,6 @@ from typing import NamedTuple
 
 
 class GraphQLResponse(NamedTuple):
-    data: str
+    payload: dict
     cookies: SimpleCookie
     status_code: int

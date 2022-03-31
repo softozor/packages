@@ -49,9 +49,10 @@ class GraphQLClient:
             cookies = SimpleCookie()
             if header_cookies:
                 cookies.load(header_cookies)
-            data = json.loads(response.read().decode('utf-8'))
-            return GraphQLResponse(
-                data=data, cookies=cookies, status_code=response.getcode())
+            payload = json.loads(response.read().decode('utf-8'))
+            graphql_response = GraphQLResponse(
+                payload=payload, cookies=cookies, status_code=response.getcode())
+            return graphql_response
         except urllib.error.HTTPError as e:
             print((e.read()))
             print('')
