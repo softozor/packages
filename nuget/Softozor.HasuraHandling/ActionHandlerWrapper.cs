@@ -72,14 +72,14 @@ public static class ActionHandlerWrapper
 
     public static async Task IssueError(HttpContext http, HasuraFunctionException ex)
     {
-        var error = new ActionErrorResponse(ex.Message);
+        var error = new ActionErrorResponse(ex.Message, ex.ErrorCode);
         http.Response.StatusCode = ex.ErrorCode;
         await http.Response.WriteAsJsonAsync(error);
     }
 
     public static async Task IssueInternalServerError(HttpContext http, Exception ex)
     {
-        var error = new ActionErrorResponse(ex.Message);
+        var error = new ActionErrorResponse(ex.Message, StatusCodes.Status500InternalServerError);
         http.Response.StatusCode = StatusCodes.Status500InternalServerError;
         await http.Response.WriteAsJsonAsync(error);
     }

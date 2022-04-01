@@ -1,5 +1,6 @@
 namespace Softozor.HasuraHandling.Data;
 
+using System.Globalization;
 using Newtonsoft.Json;
 
 public class ActionErrorResponse
@@ -8,6 +9,12 @@ public class ActionErrorResponse
     public ActionErrorResponse(string message)
     {
         this.Message = message;
+    }
+
+    [JsonConstructor]
+    public ActionErrorResponse(string message, int statusCode)
+        : this(message, new ErrorExtensions(statusCode.ToString(CultureInfo.InvariantCulture)))
+    {
     }
 
     [JsonConstructor]
