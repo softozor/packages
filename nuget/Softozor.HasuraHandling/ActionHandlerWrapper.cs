@@ -18,10 +18,9 @@ public static class ActionHandlerWrapper
     public static async Task HandleSync<TInput, TOutput>(HttpContext http, Func<TInput, TOutput> handle)
         where TInput : class
     {
-        var input = await ExtractInput<TInput>(http);
-
         try
         {
+            var input = await ExtractInput<TInput>(http);
             var output = handle(input);
             await http.Response.WriteAsJsonAsync(output);
         }
@@ -43,10 +42,9 @@ public static class ActionHandlerWrapper
     public static async Task HandleAsync<TInput, TOutput>(HttpContext http, Func<TInput, Task<TOutput>> handle)
         where TInput : class
     {
-        var input = await ExtractInput<TInput>(http);
-
         try
         {
+            var input = await ExtractInput<TInput>(http);
             var output = await handle(input);
             await http.Response.WriteAsJsonAsync(output);
         }
