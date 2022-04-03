@@ -2,24 +2,9 @@ namespace Softozor.HasuraHandling.Data;
 
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-public class HasuraClaims
-{
-    [JsonConstructor]
-    public HasuraClaims(IEnumerable<string> roles, string defaultRole, Guid userId)
-    {
-        this.Roles = roles;
-        this.DefaultRole = defaultRole;
-        this.UserId = userId;
-    }
-
-    [JsonProperty("x-hasura-allowed-roles")]
-    public IEnumerable<string> Roles { get; }
-
-    [JsonProperty("x-hasura-default-role")]
-    public string DefaultRole { get; }
-
-    [JsonProperty("x-hasura-user-id")]
-    public Guid UserId { get; }
-}
+public record HasuraClaims(
+    [property: JsonPropertyName("x-hasura-allowed-roles")] IEnumerable<string> Roles,
+    [property: JsonPropertyName("x-hasura-default-role")] string DefaultRole,
+    [property: JsonPropertyName("x-hasura-user-id")] Guid UserId);

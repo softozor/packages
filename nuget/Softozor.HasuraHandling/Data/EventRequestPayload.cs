@@ -1,112 +1,29 @@
 namespace Softozor.HasuraHandling.Data;
 
 using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-public class EventRequestPayload<TInputType>
-    where TInputType : class
-{
-    [JsonConstructor]
-    public EventRequestPayload(Guid id, DateTime createdAt, Trigger trigger, Table table, HasuraEvent<TInputType> e)
-    {
-        this.Id = id;
-        this.CreatedAt = createdAt;
-        this.Trigger = trigger;
-        this.Table = table;
-        this.Event = e;
-    }
+public record EventRequestPayload<TInputType>(
+    [property: JsonPropertyName("id")] Guid Id,
+    [property: JsonPropertyName("created_at")] DateTime CreatedAt,
+    [property: JsonPropertyName("trigger")] Trigger Trigger,
+    [property: JsonPropertyName("table")] Table Table,
+    [property: JsonPropertyName("event")] HasuraEvent<TInputType> Event)
+    where TInputType : class;
 
-    [JsonProperty("id")]
-    public Guid Id { get; }
+public record Trigger([property: JsonPropertyName("name")] string Name);
 
-    [JsonProperty("created_at")]
-    public DateTime CreatedAt { get; }
+public record Table(
+    [property: JsonPropertyName("schema")] string Schema,
+    [property: JsonPropertyName("name")] string Name);
 
-    [JsonProperty("trigger")]
-    public Trigger Trigger { get; }
+public record HasuraEvent<TInputType>(
+    [property: JsonPropertyName("session_variables")] HasuraSessionVariables SessionVariables,
+    [property: JsonPropertyName("op")] [property: JsonConverter(typeof(OpConverter))] Op Op,
+    [property: JsonPropertyName("data")] EventData<TInputType> Data)
+    where TInputType : class;
 
-    [JsonProperty("table")]
-    public Table Table { get; }
-
-    [JsonProperty("event")]
-    public HasuraEvent<TInputType> Event { get; }
-}
-
-public class Trigger
-{
-    [JsonConstructor]
-    public Trigger(string name)
-    {
-        this.Name = name;
-    }
-
-    [JsonProperty("name")]
-    public string Name { get; }
-}
-
-public class Table
-{
-    [JsonConstructor]
-    public Table(string schema, string name)
-    {
-        this.Schema = schema;
-        this.Name = name;
-    }
-
-    [JsonProperty("schema")]
-    public string Schema { get; }
-
-    [JsonProperty("name")]
-    public string Name { get; }
-}
-
-public class HasuraEvent<TInputType>
-    where TInputType : class
-{
-    private readonly Op op;
-
-    [JsonConstructor]
-    public HasuraEvent(HasuraSessionVariables sessionVariables, string op, EventData<TInputType> data)
-    {
-        this.SessionVariables = sessionVariables;
-        this.op = (Op)Enum.Parse(typeof(Op), op);
-        this.Data = data;
-    }
-
-    [JsonProperty("session_variables")]
-    public HasuraSessionVariables SessionVariables { get; }
-
-    [JsonProperty("op")]
-    public string Op => this.op.ToString();
-
-    [JsonProperty("data")]
-    public EventData<TInputType> Data { get; }
-}
-
-public enum Op
-{
-    INSERT,
-
-    UPDATE,
-
-    DELETE,
-
-    MANUAL
-}
-
-public class EventData<TInputType>
-    where TInputType : class
-{
-    [JsonConstructor]
-    public EventData(TInputType o, TInputType n)
-    {
-        this.Old = o;
-        this.New = n;
-    }
-
-    [JsonProperty("old")]
-    public TInputType Old { get; }
-
-    [JsonProperty("new")]
-    public TInputType New { get; }
-}
+public record EventData<TInputType>(
+    [property: JsonPropertyName("old")] TInputType Old,
+    [property: JsonPropertyName("new")] TInputType New)
+    where TInputType : class;

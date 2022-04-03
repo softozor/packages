@@ -1,15 +1,5 @@
 namespace Softozor.HasuraHandling.Data;
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-public class HasuraAction
-{
-    [JsonConstructor]
-    public HasuraAction(string name)
-    {
-        this.Name = name;
-    }
-
-    [JsonProperty("name")]
-    public string Name { get; }
-}
+public record HasuraAction([property: JsonPropertyName("name")] string Name);

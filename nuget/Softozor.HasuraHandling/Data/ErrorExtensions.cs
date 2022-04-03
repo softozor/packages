@@ -1,15 +1,6 @@
 namespace Softozor.HasuraHandling.Data;
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-public class ErrorExtensions
-{
-    [JsonConstructor]
-    public ErrorExtensions(string code)
-    {
-        this.Code = code;
-    }
-
-    [JsonProperty("code")]
-    public string Code { get; }
-}
+public record ErrorExtensions(
+    [property: JsonPropertyName("code")] string Code);

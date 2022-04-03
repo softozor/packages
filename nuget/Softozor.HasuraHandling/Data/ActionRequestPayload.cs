@@ -1,24 +1,9 @@
 namespace Softozor.HasuraHandling.Data;
 
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-public class ActionRequestPayload<TInputType>
-    where TInputType : class
-{
-    [JsonConstructor]
-    public ActionRequestPayload(HasuraAction action, TInputType input, HasuraSessionVariables sessionVariables)
-    {
-        this.Action = action;
-        this.Input = input;
-        this.SessionVariables = sessionVariables;
-    }
-
-    [JsonProperty("action")]
-    public HasuraAction Action { get; }
-
-    [JsonProperty("input")]
-    public TInputType Input { get; }
-
-    [JsonProperty("session_variables")]
-    public HasuraSessionVariables SessionVariables { get; }
-}
+public record ActionRequestPayload<TInputType>(
+    [property: JsonPropertyName("action")] HasuraAction Action,
+    [property: JsonPropertyName("input")] TInputType Input,
+    [property: JsonPropertyName("session_variables")] HasuraSessionVariables SessionVariables)
+    where TInputType : class;

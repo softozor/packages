@@ -1,7 +1,7 @@
 namespace Softozor.HasuraHandling.Data;
 
 using System.Globalization;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 public class ActionErrorResponse
 {
@@ -24,9 +24,9 @@ public class ActionErrorResponse
         this.Extensions = extensions;
     }
 
-    [JsonProperty("message")]
+    [JsonPropertyName("message")]
     public string Message { get; }
 
-    [JsonProperty("extensions")]
+    [JsonPropertyName("extensions")]
     public ErrorExtensions? Extensions { get; }
 }
