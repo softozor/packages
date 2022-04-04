@@ -39,6 +39,29 @@ public static class ActionHandlerWrapper
         "CA1031: Do not catch general exception types",
         Justification =
             "That's the last step before outputting to the user, therefore we need to catch everything and return a useful error message")]
+    public static async Task HandleAsync<TInput>(HttpContext http, Func<TInput, Task> handle)
+        where TInput : class
+    {
+        try
+        {
+            var input = await ExtractInput<TInput>(http);
+            await handle(input);
+        }
+        catch (HasuraFunctionException ex)
+        {
+            await IssueError(http, ex);
+        }
+        catch (Exception ex)
+        {
+            await IssueInternalServerError(http, ex);
+        }
+    }
+
+    [SuppressMessage(
+        "Design",
+        "CA1031: Do not catch general exception types",
+        Justification =
+            "That's the last step before outputting to the user, therefore we need to catch everything and return a useful error message")]
     public static async Task HandleAsync<TInput, TOutput>(HttpContext http, Func<TInput, Task<TOutput>> handle)
         where TInput : class
     {
