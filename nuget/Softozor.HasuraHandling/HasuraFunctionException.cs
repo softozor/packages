@@ -1,4 +1,4 @@
-namespace Softozor.HasuraHandling.Exceptions;
+namespace Softozor.HasuraHandling;
 
 using System;
 using System.Runtime.Serialization;

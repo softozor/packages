@@ -4,8 +4,8 @@ using System;
 using GraphQL.Client.Abstractions;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.Newtonsoft;
-using HasuraHandling.Interfaces;
 using Softozor.GraphqlClient.Interfaces;
+using Softozor.HasuraHandling;
 
 public class ClientFactory : IClientFactory
 {

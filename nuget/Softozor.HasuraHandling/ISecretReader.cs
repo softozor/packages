@@ -1,4 +1,4 @@
-namespace Softozor.HasuraHandling.Interfaces;
+namespace Softozor.HasuraHandling;
 
 public interface ISecretReader
 {

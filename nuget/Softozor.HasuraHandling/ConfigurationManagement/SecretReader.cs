@@ -1,7 +1,6 @@
 namespace Softozor.HasuraHandling.ConfigurationManagement;
 
 using System.IO;
-using Softozor.HasuraHandling.Interfaces;
 
 public class SecretReader : ISecretReader
 {

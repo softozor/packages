@@ -3,8 +3,7 @@ namespace Softozor.FusionAuth;
 using System;
 using io.fusionauth;
 using Microsoft.AspNetCore.Http;
-using Softozor.HasuraHandling.Exceptions;
-using Softozor.HasuraHandling.Interfaces;
+using Softozor.HasuraHandling;
 
 public class AuthClientFactory : IAuthClientFactory
 {
