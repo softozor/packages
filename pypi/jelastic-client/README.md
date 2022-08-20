@@ -5,7 +5,7 @@ A Jelastic API python library.
 # Installation
 
 ```bash
-pip3 install jelastic-client --extra-index-url https://__token__:<your_personal_token>@gitlab.hidora.com/api/v4/projects/198/packages/pypi/simple
+pip3 install jelastic-client
 ```
 In that case, the gitlab access token needs to have `read_api` scope.
 
