@@ -7,13 +7,6 @@ A Jelastic API python library.
 ```bash
 pip3 install jelastic-client
 ```
-In that case, the gitlab access token needs to have `read_api` scope.
-
-You can also install the package from [pypi](http://pypi.org):
-
-```bash
-pip3 install jelastic-client
-```
 
 # Usage
 
