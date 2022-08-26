@@ -1,4 +1,5 @@
 import json
+import re
 
 import pytest
 
@@ -10,6 +11,19 @@ from jelastic_client import (
 )
 from jelastic_client.core import JelasticClientException
 from jelastic_client.env_info import EnvInfo
+
+
+def test_generate_random_env_name_follows_jelastic_string_pattern(
+        control_client: ControlClient
+):
+    # Arrange
+
+    # Act
+    env_name = control_client.generate_random_env_name()
+
+    # Assert
+    pattern = re.compile("^env-[0-9]{7}$")
+    assert pattern.match(env_name)
 
 
 def test_control_client_delete_non_existent_environment_raises_exception(

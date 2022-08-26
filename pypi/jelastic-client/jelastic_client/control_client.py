@@ -1,3 +1,6 @@
+import random
+import string
+
 import simplejson as json
 
 from .core import (
@@ -19,6 +22,12 @@ class ControlClient(BaseClient):
 
     def __init__(self, api_client: ApiClient):
         super().__init__(api_client)
+
+    def generate_random_env_name(self):
+        env_name = self._create_random_env_name()
+        while self.get_env_info(env_name).exists():
+            env_name = self._create_random_env_name()
+        return env_name
 
     def create_environment(self, env: EnvSettings, nodes: MultipleNodeSettings) -> EnvInfo:
         env_json = json.dumps(env)
@@ -83,3 +92,8 @@ class ControlClient(BaseClient):
     def set_container_env_vars_by_group(self, env_name: str, node_group: str, vars: [str]):
         self._execute(
             who_am_i(), envName=env_name, nodeGroup=node_group, data=json.dumps(vars))
+
+    @staticmethod
+    def _create_random_env_name():
+        env_id = "".join(random.choice(string.digits) for _ in range(7))
+        return f"env-{env_id}"

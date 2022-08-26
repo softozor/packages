@@ -29,7 +29,7 @@ def pytest_addoption(parser):
     )
     parser.addoption(
         "--base-url", action="store",
-        default="http://gitlab.hidora.com/softozor/packages/-/raw/master/pypi/jelastic-client",
+        default="https://raw.githubusercontent.com/softozor/packages/master/pypi/jelastic-client",
         help="project base url for raw files"
     )
     parser.addoption(
@@ -74,6 +74,16 @@ def test_data_dir(request: FixtureRequest) -> str:
 @pytest.fixture
 def jelastic_user_email(request: FixtureRequest) -> str:
     return request.config.getoption("--jelastic-user-email")
+
+
+@pytest.fixture
+def supported_jelastic_version(request: FixtureRequest) -> str:
+    return request.config.getoption("--jelastic-version")
+
+
+@pytest.fixture
+def commit_sha(request: FixtureRequest) -> str:
+    return request.config.getoption("--commit-sha")
 
 
 @pytest.fixture
@@ -128,16 +138,6 @@ def non_existent_manifest_url(base_url) -> str:
     response = requests.get(url)
     assert 404 == response.status_code
     return url
-
-
-@pytest.fixture
-def supported_jelastic_version(request: FixtureRequest) -> str:
-    return request.config.getoption("--jelastic-version")
-
-
-@pytest.fixture
-def commit_sha(request: FixtureRequest) -> str:
-    return request.config.getoption("--commit-sha")
 
 
 @pytest.fixture
